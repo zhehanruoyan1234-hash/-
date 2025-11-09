@@ -1,0 +1,105 @@
+{
+  "version": "1.0",
+  "description": "角色切换规则配置",
+  "rules": {
+    "emotion_driven": {
+      "强烈负面": {
+        "target_roles": ["安慰者", "倾听者"],
+        "priority": 0.9,
+        "conditions": {
+          "emotion_types": ["sadness", "grief", "fear", "anxiety", "disappointment"],
+          "intensity": "强烈"
+        }
+      },
+      "强烈正面": {
+        "target_roles": ["玩伴", "朋友"],
+        "priority": 0.8,
+        "conditions": {
+          "emotion_types": ["joy", "excitement", "amusement", "happiness"],
+          "intensity": "强烈"
+        }
+      },
+      "焦虑": {
+        "target_roles": ["倾听者", "导师"],
+        "priority": 0.7,
+        "conditions": {
+          "emotion_types": ["anxiety", "worry", "nervousness"],
+          "intensity": ["中等", "强烈"]
+        }
+      },
+      "孤独": {
+        "target_roles": ["陪伴者", "朋友"],
+        "priority": 0.8,
+        "conditions": {
+          "emotion_types": ["loneliness", "sadness"],
+          "intensity": ["中等", "强烈"]
+        }
+      }
+    },
+    "topic_driven": {
+      "工作学习": {
+        "target_roles": ["导师", "伙伴"],
+        "priority": 0.7,
+        "keywords": ["工作", "学习", "考试", "任务", "项目", "报告", "作业"],
+        "min_match_count": 1
+      },
+      "娱乐放松": {
+        "target_roles": ["玩伴", "朋友"],
+        "priority": 0.6,
+        "keywords": ["游戏", "娱乐", "放松", "开心", "电影", "音乐", "旅行"],
+        "min_match_count": 1
+      },
+      "情感倾诉": {
+        "target_roles": ["倾听者", "安慰者"],
+        "priority": 0.8,
+        "keywords": ["难过", "伤心", "困扰", "烦恼", "问题", "不开心"],
+        "min_match_count": 1
+      },
+      "日常聊天": {
+        "target_roles": ["朋友", "陪伴者"],
+        "priority": 0.5,
+        "keywords": ["今天", "最近", "怎么样", "还好", "一般"],
+        "min_match_count": 1
+      }
+    },
+    "scenario_driven": {
+      "深夜": {
+        "target_roles": ["倾听者", "陪伴者"],
+        "priority": 0.7,
+        "time_range": {
+          "start": "22:00",
+          "end": "02:00"
+        }
+      },
+      "清晨": {
+        "target_roles": ["朋友", "伙伴"],
+        "priority": 0.6,
+        "time_range": {
+          "start": "06:00",
+          "end": "09:00"
+        }
+      },
+      "工作时间": {
+        "target_roles": ["导师", "伙伴"],
+        "priority": 0.6,
+        "time_range": {
+          "start": "09:00",
+          "end": "18:00"
+        }
+      },
+      "休息时间": {
+        "target_roles": ["玩伴", "朋友"],
+        "priority": 0.5,
+        "time_range": {
+          "start": "18:00",
+          "end": "22:00"
+        }
+      }
+    }
+  },
+  "plugins": {
+    "enabled": [],
+    "custom_rules": []
+  }
+}
+

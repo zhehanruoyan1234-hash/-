@@ -1,0 +1,81 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 虚拟环境
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 环境变量和配置（包含敏感信息）
+.env
+.env.local
+.env.*.local
+
+# 日志文件
+*.log
+logs/
+
+# 数据库文件
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+memory.db
+
+# Qdrant数据
+qdrant_db/
+
+# Chroma数据库
+chroma_db/
+
+# 缓存文件
+cache_snapshots/
+*.cache
+
+# 模型缓存目录（预训练模型，不包含在GitHub版本中）
+models_cache/
+**/models_cache/
+
+# 临时文件
+*.tmp
+*.temp
+
+# 操作系统
+.DS_Store
+Thumbs.db
+
+# 项目特定
+static/js/api-client.js.map
+static/css/api-client.css.map
+
+# 数据目录（运行时生成）
+data/
+

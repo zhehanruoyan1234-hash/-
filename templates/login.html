@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欢迎 - 未来搭子 AI陪伴智能体</title>
+    <!-- API客户端样式 -->
+    <link rel="stylesheet" href="/static/css/api-client.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+        background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    
+    .login-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+        padding: 40px;
+        animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .logo {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .logo h1 {
+        color: #4caf50;
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+    
+    .logo p {
+        color: #5d6d7e;
+        font-size: 14px;
+    }
+    
+    .ai-intro {
+        background: #f5f5f5;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+        line-height: 1.8;
+        color: #2c3e50;
+        font-size: 15px;
+    }
+    
+    .form-section {
+        margin-bottom: 25px;
+    }
+    
+    .form-section label {
+        display: block;
+        margin-bottom: 8px;
+        color: #2c3e50;
+        font-weight: 500;
+        font-size: 14px;
+    }
+    
+    .form-section input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: border-color 0.3s;
+    }
+    
+    .form-section input:focus {
+        outline: none;
+        border-color: #4caf50;
+    }
+    
+    .btn {
+        width: 100%;
+        padding: 14px;
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin-top: 10px;
+    }
+    
+    .btn:hover {
+        background: #45a049;
+    }
+    
+    .btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+    
+    .user-list {
+        margin-top: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    
+    .user-item {
+        padding: 12px 16px;
+        background: #f5f5f5;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: background 0.3s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .user-item:hover {
+        background: #e8f5e9;
+    }
+    
+    .user-info {
+        flex: 1;
+    }
+    
+    .user-name {
+        font-weight: 500;
+        color: #2c3e50;
+        margin-bottom: 4px;
+    }
+    
+    .user-meta {
+        font-size: 12px;
+        color: #5d6d7e;
+    }
+    
+    .divider {
+        text-align: center;
+        margin: 25px 0;
+        color: #5d6d7e;
+        font-size: 14px;
+        position: relative;
+    }
+    
+    .divider::before,
+    .divider::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 40%;
+        height: 1px;
+        background: #e0e0e0;
+    }
+    
+    .divider::before {
+        left: 0;
+    }
+    
+    .divider::after {
+        right: 0;
+    }
+    
+    .error-message {
+        background: #ffebee;
+        color: #c62828;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-size: 14px;
+        display: none;
+    }
+    
+    .loading {
+        text-align: center;
+        color: #5d6d7e;
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>🤖 未来搭子</h1>
+            <p>AI陪伴智能体</p>
+        </div>
+        
+        <div class="ai-intro" id="aiIntro">
+            你好！我是未来搭子，你的AI陪伴智能体。我很高兴认识你！
+            <br><br>
+            在开始之前，我想了解一下你是谁。请告诉我你的名字，这样我就能更好地记住你，并在未来的对话中给你更个性化的陪伴。
+        </div>
+        
+        <div class="error-message" id="errorMessage"></div>
+        
+        <!-- 新用户注册 -->
+        <div id="newUserSection">
+            <div class="form-section">
+                <label for="userName">请输入你的名字：</label>
+                <input type="text" id="userName" placeholder="例如：小明" maxlength="20">
+            </div>
+            <button class="btn" id="createUserBtn" onclick="createUser()">开始对话</button>
+        </div>
+        
+        <!-- 现有用户列表 -->
+        <div id="existingUsersSection" style="display: none;">
+            <div class="divider">或选择已有账号</div>
+            <div class="user-list" id="userList">
+                <div class="loading">加载中...</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- API客户端脚本 -->
+    <script src="/static/js/api-client.js"></script>
+    <script>
+        let existingUsers = [];
+        
+        // 页面加载时检查是否有用户列表
+        window.addEventListener('DOMContentLoaded', async () => {
+            await loadExistingUsers();
+            
+            // 检查localStorage中是否有当前用户
+            const currentUserId = localStorage.getItem('currentUserId');
+            if (currentUserId) {
+                // 直接跳转到聊天页面
+                window.location.href = '/chat';
+                return;
+            }
+        });
+        
+        // 加载现有用户列表（使用API客户端）
+        async function loadExistingUsers() {
+            const response = await APIClient.get('/users', {
+                loadingElement: '#userList',
+                loadingMessage: '加载用户列表中...',
+                showError: true,
+                errorContainer: '.login-container'
+            });
+            
+            if (response.success && response.data) {
+                existingUsers = response.data.users || response.data || [];
+                
+                if (existingUsers.length > 0) {
+                    renderUserList();
+                    document.getElementById('existingUsersSection').style.display = 'block';
+                }
+            }
+        }
+        
+        // 渲染用户列表
+        function renderUserList() {
+            const userList = document.getElementById('userList');
+            userList.innerHTML = '';
+            
+            if (existingUsers.length === 0) {
+                userList.innerHTML = '<div class="loading">暂无已有用户</div>';
+                return;
+            }
+            
+            existingUsers.forEach(user => {
+                const userItem = document.createElement('div');
+                userItem.className = 'user-item';
+                userItem.onclick = () => selectUser(user.user_id);
+                
+                const lastActive = user.last_active 
+                    ? new Date(user.last_active).toLocaleDateString('zh-CN')
+                    : '从未';
+                
+                userItem.innerHTML = `
+                    <div class="user-info">
+                        <div class="user-name">${escapeHtml(user.name || '未命名用户')}</div>
+                        <div class="user-meta">${user.total_conversations || 0} 条对话 · 最后活跃：${lastActive}</div>
+                    </div>
+                `;
+                
+                userList.appendChild(userItem);
+            });
+        }
+        
+        // 创建新用户（使用API客户端）
+        async function createUser() {
+            const userNameInput = document.getElementById('userName');
+            const userName = userNameInput.value.trim();
+            const btn = document.getElementById('createUserBtn');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            if (!userName) {
+                showError('请输入你的名字');
+                userNameInput.focus();
+                return;
+            }
+            
+            if (userName.length > 20) {
+                showError('名字不能超过20个字符');
+                return;
+            }
+            
+            btn.disabled = true;
+            btn.textContent = '创建中...';
+            errorMsg.style.display = 'none';
+            
+            const response = await APIClient.post('/users', { name: userName }, {
+                loadingElement: btn,
+                loadingMessage: '创建中...',
+                showError: false, // 手动处理错误
+                errorContainer: errorMsg,
+                retryCount: 2
+            });
+            
+            if (response.success && response.data) {
+                // 保存用户ID到localStorage
+                localStorage.setItem('currentUserId', response.data.user_id);
+                localStorage.setItem('currentUserName', userName);
+                
+                // 跳转到聊天页面
+                window.location.href = '/chat';
+            } else {
+                showError('创建用户失败: ' + (response.error || '未知错误'));
+                btn.disabled = false;
+                btn.textContent = '开始对话';
+            }
+        }
+        
+        // 选择已有用户
+        async function selectUser(userId) {
+            try {
+                // 保存用户ID到localStorage
+                const user = existingUsers.find(u => u.user_id === userId);
+                localStorage.setItem('currentUserId', userId);
+                if (user && user.name) {
+                    localStorage.setItem('currentUserName', user.name);
+                }
+                
+                // 跳转到聊天页面
+                window.location.href = '/chat';
+            } catch (error) {
+                showError('选择用户失败: ' + error.message);
+            }
+        }
+        
+        // 显示错误消息
+        function showError(message) {
+            const errorMsg = document.getElementById('errorMessage');
+            errorMsg.textContent = message;
+            errorMsg.style.display = 'block';
+        }
+        
+        // HTML转义
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // 回车键创建用户
+        document.getElementById('userName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                createUser();
+            }
+        });
+    </script>
+</body>
+</html>
+

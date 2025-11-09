@@ -1,0 +1,199 @@
+/* API客户端样式 - 加载状态和错误提示 */
+
+/* 加载指示器样式 */
+.api-loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    color: #666;
+}
+
+.api-loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #4caf50;
+    border-radius: 50%;
+    animation: api-spin 1s linear infinite;
+}
+
+@keyframes api-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.api-loading-message {
+    font-size: 14px;
+}
+
+/* 加载遮罩层 */
+.api-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border-radius: inherit;
+}
+
+[data-theme="night"] .api-loading-overlay {
+    background: rgba(45, 55, 72, 0.8);
+}
+
+/* 错误提示样式 */
+.api-error-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 12px 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+    min-width: 300px;
+    max-width: 500px;
+    animation: api-slideIn 0.3s ease;
+}
+
+@keyframes api-slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.api-error-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.api-error-icon {
+    font-size: 18px;
+}
+
+.api-error-text {
+    flex: 1;
+    font-size: 14px;
+    color: #856404;
+}
+
+.api-error-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #856404;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.api-error-close:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* 可加载元素样式 */
+.api-loadable {
+    position: relative;
+    min-height: 50px;
+}
+
+/* 进度条样式（用于长耗时任务） */
+.api-progress-container {
+    width: 100%;
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.api-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50, #81c784);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+    animation: api-progress-shimmer 1.5s infinite;
+}
+
+@keyframes api-progress-shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* 阶段性状态提示 */
+.api-stage-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #666;
+}
+
+.api-stage-indicator.active {
+    color: #4caf50;
+    font-weight: 500;
+}
+
+.api-stage-indicator.completed {
+    color: #999;
+}
+
+.api-stage-indicator .api-stage-icon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.api-stage-indicator.active .api-stage-icon {
+    background: #4caf50;
+    color: white;
+    animation: api-pulse 1.5s infinite;
+}
+
+.api-stage-indicator.completed .api-stage-icon {
+    background: #4caf50;
+    color: white;
+}
+
+@keyframes api-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .api-error-message {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+        max-width: none;
+    }
+}
+

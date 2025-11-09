@@ -1,0 +1,35 @@
+{
+  "distance": "COSINE",
+  "hnsw_profiles": {
+    "small": {
+      "m": 16,
+      "ef_construct": 64,
+      "full_scan_threshold": 10000,
+      "description": "小规模数据（<10K向量）"
+    },
+    "medium": {
+      "m": 24,
+      "ef_construct": 100,
+      "full_scan_threshold": 50000,
+      "description": "中等规模数据（10K-100K向量）"
+    },
+    "large": {
+      "m": 32,
+      "ef_construct": 128,
+      "full_scan_threshold": 100000,
+      "description": "大规模数据（>100K向量，高精度）"
+    }
+  },
+  "default_profile": "small",
+  "auto_tune": true,
+  "auto_tune_thresholds": {
+    "small_to_medium": 10000,
+    "medium_to_large": 100000
+  },
+  "optimizers": {
+    "indexing_threshold": 10000,
+    "flush_interval_sec": 5,
+    "max_optimization_threads": 1
+  }
+}
+
